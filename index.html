@@ -1,0 +1,531 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Comme à la Maison — Cours & Dîner Spectacle</title>
+  <meta name="description" content="Cours de cuisine enfants & adultes, dîner spectacle, produits du potager qui entourent la maison." />
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
+  <style>
+    :root{
+      --vert-sauge:#9CB380;
+      --terre:#C97C5D;
+      --bois:#4B3621;
+      --creme:#F6F3E4;
+      --texte:#2b2b2b;
+    }
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:"Cormorant Garamond", Georgia, serif;background:var(--creme);color:var(--texte);line-height:1.6}
+    header{
+      /* bannière image en pleine largeur */
+      background-image: url('entete.png');
+      background-size: cover;
+      background-position: center;
+      color: white;
+      padding:56px 20px;
+      text-align:center;
+      position:relative;
+      overflow:hidden;
+    }
+    /* légère superposition pour garantir la lisibilité du texte */
+    header::before{
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.28);
+      z-index: 0;
+    }
+    header * { position: relative; z-index: 1; }
+    header h1{font-family:'Dancing Script',cursive;font-size:3.2rem;margin-bottom:6px}
+    /* Paragraphe de la bannière : plus grand et placé en bas à droite */
+    header p{
+      font-size:1.15rem;
+      opacity:0.95;
+      position: absolute;
+      right: 24px;
+      bottom: 20px;
+      text-align: right;
+      max-width: 46%;
+      line-height:1.35;
+      margin: 0;
+    }
+    /* Petite adaptation pour écrans étroits : texte centré sous le titre */
+    @media (max-width:900px){
+      header p{
+        position: static;
+        max-width: none;
+        text-align: center;
+        margin-top: 10px;
+        font-size: 1.02rem;
+      }
+    }
+    nav{background:#fff;border-bottom:1px solid #e9e6e0;padding:12px 0;position:sticky;top:0;z-index:10}
+    nav .wrap{max-width:1100px;margin:0 auto;display:flex;gap:18px;justify-content:center;padding:0 18px}
+    nav a{color:var(--bois);text-decoration:none;font-weight:600}
+    .container{max-width:1100px;margin:36px auto;padding:0 18px}
+    .hero{display:grid;grid-template-columns:1fr 420px;gap:22px;align-items:center;margin-bottom:28px}
+    .hero .card{padding:22px;border-radius:12px;background:#fff;box-shadow:0 6px 20px rgba(60,50,30,0.06);}
+    .hero img{width:100%;height:320px;object-fit:cover;border-radius:10px;display:block}
+    /* Puzzle images : trois vignettes superposées, contemporaine */
+    .hero-images{position:relative;width:100%;height:320px;display:block}
+    .hero-images img{position:absolute;object-fit:cover;border-radius:12px;box-shadow:0 8px 30px rgba(20,15,10,0.18);transition:transform .25s ease;cursor:default}
+    .hero-images img:nth-child(1){left:0;top:0;width:62%;height:70%;transform:rotate(-4deg)}
+    .hero-images img:nth-child(2){right:0;top:6%;width:56%;height:64%;transform:rotate(6deg)}
+    .hero-images img:nth-child(3){left:18%;bottom:0;width:64%;height:66%;transform:rotate(-2deg)}
+    .hero-images img:hover{transform:scale(1.03)}
+    /* Puzzle réutilisable (même présentation que maisonjardin) */
+    .puzzle-images{position:relative;width:100%;height:320px;display:block}
+    .puzzle-images img{position:absolute;object-fit:cover;border-radius:12px;box-shadow:0 8px 30px rgba(20,15,10,0.18);transition:transform .25s ease;cursor:pointer}
+    .puzzle-images img:nth-child(1){left:0;top:0;width:62%;height:70%;transform:rotate(-4deg)}
+    .puzzle-images img:nth-child(2){right:0;top:6%;width:56%;height:64%;transform:rotate(6deg)}
+    .puzzle-images img:nth-child(3){left:18%;bottom:0;width:64%;height:66%;transform:rotate(-2deg)}
+    .puzzle-images img:hover{transform:scale(1.03)}
+    /* Puzzle pour section adultes : 5 images superposées */
+    /* Lightbox / modal */
+    .modal-overlay{
+      position:fixed;
+      inset:0;
+      background:rgba(10,10,10,0.75);
+      display:none;
+      align-items:center;
+      justify-content:center;
+      z-index:1200;
+      padding:20px;
+      transition:opacity .18s ease;
+      opacity:0;
+    }
+    .modal-overlay.open{display:flex;opacity:1}
+
+    /* Bloquer le scroll de fond quand la modal est ouverte */
+    body.modal-open{overflow:hidden;}
+
+    .modal-content{
+      max-width:1100px;
+      width:100%;
+      max-height:92vh;
+      position:relative;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:12px;
+    }
+    .modal-img{
+      display:block;
+      margin:0 auto;
+      max-width:calc(100% - 80px);
+      max-height:calc(100vh - 120px);
+      border-radius:8px;
+      box-shadow:0 24px 60px rgba(0,0,0,0.6);
+      object-fit:contain;
+      background:#111;
+    }
+    .modal-close,.modal-nav{
+      position:absolute;
+      background:rgba(255,255,255,0.95);
+      border-radius:6px;
+      padding:6px 10px;
+      color:#222;
+      font-weight:700;
+      cursor:pointer;
+      border:0;
+      z-index:1210;
+    }
+    .modal-close{top:10px;right:10px}
+    .modal-nav{top:50%;transform:translateY(-50%);opacity:0.95}
+    .modal-prev{left:8px}
+    .modal-next{right:8px}
+    @media (max-width:900px){ .modal-img{max-width:92%; max-height:78vh} }
+    @media (max-width:600px){ .modal-nav{display:none} }
+    section{margin-bottom:40px}
+    section h2{color:var(--terre);font-family:'Dancing Script',cursive;font-size:2.1rem;margin-bottom:10px}
+    .card{background:#fff;padding:20px;border-radius:10px;box-shadow:0 8px 24px rgba(30,20,10,0.04);}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:18px;align-items:center}
+    .img{width:100%;height:320px;object-fit:cover;border-radius:8px}
+    ul{margin-top:10px;margin-left:18px}
+    .cta{display:inline-block;background:var(--terre);color:white;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:700;margin-top:12px}
+    footer{background:var(--vert-sauge);color:white;padding:22px;text-align:center;margin-top:24px}
+    @media (max-width:900px){.hero{grid-template-columns:1fr}.grid2{grid-template-columns:1fr} .hero img{height:220px} }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Comme à la Maison</h1>
+    <p>Cours pour enfants, ateliers adultes & dîners-spectacle — une maison, un potager, des plats préparés devant vous.</p>
+  </header>
+
+  <nav aria-label="Navigation principale">
+    <div class="wrap">
+      <a href="#enfants">Cours Enfants</a>
+      <a href="#adultes">Cours Adultes</a>
+      <a href="#diner">Dîner Spectacle</a>
+      <a href="#potager">Le Jardin</a>
+      <a href="#contact">Réservation</a>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section class="hero">
+      <div class="card">
+        <h2>Vivez la cuisine, partagez la table</h2>
+        <p>Dans une maison de campagne réchauffée par le feu et entourée d'un potager et d'arbres fruitiers, le chef vous invite à apprendre, participer et déguster. Les produits du jardin parfument chaque plat.</p>
+        <p><a class="cta" href="#contact">Réserver une date</a></p>
+        <div style="margin-top:14px;color:#666;font-size:0.95rem">
+          <strong>Horaires :</strong>
+          <ul>
+            <li>Mercredi & vacances scolaires : cours enfants</li>
+            <li>Samedi & dimanche matin : ateliers adultes</li>
+            <li>Mercredi, Jeudi, Vendredi, Samedi, Dimanche soir</li>
+          </ul>
+        </div>
+      </div>
+
+      <div>
+        <!-- Puzzle / collage de 3 images contemporaines -->
+        <div class="hero-images" data-dir="maisonjardin" data-gallery="maisonjardin" aria-hidden="false">
+          <img src="maisonjardin/maison-jardin3.webp" alt="Maison et jardin - vue 1" data-gallery="maisonjardin" />
+          <img src="maisonjardin/maison-jardin1.jpeg" alt="Maison et jardin - vue 2" data-gallery="maisonjardin" />
+          <img src="maisonjardin/maison-jardin2.jpg" alt="Maison et jardin - vue 3" data-gallery="maisonjardin" />
+        </div>
+      </div>
+    </section>
+
+    <section id="enfants" class="card">
+      <h2>Les Petits Chefs — Cours enfants</h2>
+      <div class="grid2">
+        <div>
+          <p>Chaque mercredi après-midi et pendant les vacances, les enfants (6-10 ans / 11-15 ans) 
+            apprennent à cuisiner avec des produits frais du jardin. 
+            plats mijotés,  astuces  de chef, educations culinaires  et petites recettes qui donnent confiance.</p>
+          
+          <ul>
+            <li>Durée : 2h30  (préparation + dégustation)</li>
+            <li>Matériel fourni : tablier & fiche recette</li>
+            <li>Tarif indicatif : 35 € / enfant</li>
+          </ul>
+        </div>
+        <div>
+          <!-- Puzzle 3 images pour la section enfants -->
+          <div class="puzzle-images" data-dir="coursenfants" data-gallery="coursenfants" aria-hidden="false">
+            <img src="coursenfants/petitschefs3.jpg" alt="Cours enfants - vue 1" data-gallery="coursenfants" />
+            <img src="coursenfants/petitschefs2.jpeg" alt="Cours enfants - vue 2" data-gallery="coursenfants" />
+            <img src="coursenfants/petitscherfs.png" alt="Cours enfants - vue 3" data-gallery="coursenfants" />
+          </div>
+        </div>
+      </div>
+      <p style="margin-top:10px;color:#666">Le potager visible depuis la cuisine inspire les recettes : herbes fraîches, tomates et œufs donnent du sens aux ateliers.</p>
+    </section>
+
+    <section id="adultes" class="card">
+      <h2>La Table — Ateliers pour adultes</h2>
+      <div class="grid2">
+        <div>
+          <p>Samedi et dimanche matin, réalisez un repas (entrée, plat) guidé par le chef. Techniques, astuces et dégustation conviviale : un cours pratique pour apprendre et vous repartez avec un repas pour deux.</p>
+          <ul>
+            <li>Durée : 2h30 (préparation + dégustation)</li>
+            <li>Tarif : 55 € / personne — duo : 100 €</li>
+            <li>Option : accord mets-vins disponible</li>
+          </ul>
+        </div>
+        <div>
+          <!-- Puzzle 3 images pour la section adultes (même style que maisonjardin) -->
+          <div class="puzzle-images" data-dir="coursadultes" data-gallery="coursadultes" aria-hidden="false">
+            <img src="coursadultes/cours1.jpg" alt="Atelier adultes - vue 1" data-gallery="coursadultes" />
+            <img src="coursadultes/cours2.jpg" alt="Atelier adultes - vue 2" data-gallery="coursadultes" />
+            <img src="coursadultes/cours3.jpg" alt="Atelier adultes - vue 3" data-gallery="coursadultes" />
+          </div>
+        </div>
+      </div>
+      <p style="margin-top:10px;color:#666">Les ingrédients sont choisis en priorité dans notre jardin et chez des petits producteurs locaux, pour un goût authentique et de saison.</p>
+    </section>
+
+    <section id="diner" class="card">
+      <h2>Dîner Spectacle — Le chef cuisine devant vous</h2>
+      <div class="grid2">
+        <div>
+          <p>Assistez à la préparation de votre repas en direct : le chef partage ses gestes, ses techniques et raconte l'histoire de ses producteurs. Posez vos questions, échangez, participez si vous le souhaitez. Puis savourez votre repas au coin du feu, sur la terrasse ou sous les oliviers.</p>
+
+          <p><strong>La formule :</strong></p>
+          <ul>
+            <li>De 6 à 15 personnes</li>
+            <li>Menu complet : apéritif, entrée, plat, dessert (vins en supplément)</li>
+            <li>55 € par personne — Offre duo : 100 €</li>
+          </ul>
+
+          <p>L'esprit d'une vraie table d'hôte, où se créent rencontres et moments authentiques.</p>
+
+          <h3>Privatisation & événements</h3>
+          <p>Privatisez la maison pour vos événements : la cuisine vivante et les produits frais du jardin donnent à chaque événement une dimension conviviale et inoubliable.</p>
+          <ul>
+            <li>Fêtes d'anniversaire (petits et grands)</li>
+            <li>Enterrements de vie de célibataire</li>
+            <li>Baptêmes, communions</li>
+            <li>Mariages intimistes</li>
+            <li>Repas d'entreprise et séminaires</li>
+          </ul>
+
+          <p>Contactez-nous pour composer ensemble votre événement sur mesure.</p>
+        </div>
+        <div>
+          <!-- Puzzle 3 images pour la section dîner -->
+          <div class="puzzle-images" data-dir="dinnerspectacle" data-gallery="diner" aria-hidden="false">
+            <img src="dinnerspectacle/dinerspectacle1.jpg" alt="Dîner spectacle - vue 1" data-gallery="diner" />
+            <img src="dinnerspectacle/dinerspectacle2.jpg" alt="Dîner spectacle - vue 2" data-gallery="diner" />
+            <img src="dinnerspectacle/dinerspectacle3.jpg" alt="Dîner spectacle - vue 3" data-gallery="diner" />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="potager" class="card">
+      <h2>Le Jardin autour de la maison</h2>
+      <div class="grid2">
+      <div class="puzzle-images" data-dir="potager" data-gallery="potager" aria-hidden="false">
+          <img src="potager/jardin1.jpg" alt="Potager" class="img" data-gallery="potager" />
+          <img src="potager/jardin2.jpg" alt="Potager" class="img" data-gallery="potager" />
+          <img src="potager/jardin3.jpg" alt="Potager" class="img" data-gallery="potager" />
+        </div>
+        <div>
+          <p>Notre potager et verger ne sont pas des ateliers : ils fournissent des produits frais pour la cuisine et embellissent les extérieurs. Tomates anciennes, fines herbes, fruits à cueillir — la saison guide les menus et les couleurs.</p>
+          <ul>
+            <li>Usage culinaire prioritaire</li>
+            <li>Esthétique & ambiance pour les cours et dîners</li>
+            <li>Choix variétal centré sur saveur et rusticité</li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin-top:10px;color:#666">Le potager est un décor vivant, un réservoir de saveurs et une source d'inspiration pour chaque atelier.</p>
+    </section>
+
+    <section id="contact" class="card">
+      <h2>Contact & Réservation</h2>
+      <p>Envoyez vos demandes (date, nombre de personnes, type d'activité) et nous revenons vers vous rapidement.</p>
+      <form onsubmit="event.preventDefault(); alert('Merci — demande reçue. Nous vous répondrons rapidement.');">
+        <label>Nom</label><br>
+        <input type="text" name="name" required style="width:100%;padding:8px;margin-top:6px;margin-bottom:10px"><br>
+        <label>Email</label><br>
+        <input type="email" name="email" required style="width:100%;padding:8px;margin-top:6px;margin-bottom:10px"><br>
+        <label>Message / Préférences</label><br>
+        <textarea name="message" rows="4" style="width:100%;padding:8px;margin-top:6px"></textarea><br><br>
+        <button class="cta" type="submit">Envoyer la demande</button>
+      </form>
+      <p style="margin-top:10px;color:#666">Pour rendre le formulaire opérationnel : utilisez Formspree, Netlify Forms ou connectez un backend.</p>
+    </section>
+    
+    <!-- Lightbox modal -->
+    <div id="lightbox" class="modal-overlay" aria-hidden="true" role="dialog" aria-label="Agrandissement image">
+      <div class="modal-content">
+        <button class="modal-close" aria-label="Fermer">✕</button>
+        <button class="modal-nav modal-prev" aria-label="Image précédente">‹</button>
+        <img class="modal-img" src="" alt="">
+        <button class="modal-nav modal-next" aria-label="Image suivante">›</button>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 Comme à la Maison — Ferme urbaine & chef à domicile
+  </footer>
+
+<script>
+// Lightbox centré, conserve la présentation puzzle ; gère blocage du scroll et focus accessible
+(function(){
+  const overlay = document.getElementById('lightbox');
+  const modalImg = overlay.querySelector('.modal-img');
+  const closeBtn = overlay.querySelector('.modal-close');
+  const prevBtn = overlay.querySelector('.modal-prev');
+  const nextBtn = overlay.querySelector('.modal-next');
+  let currentGallery = [];
+  let currentIndex = 0;
+
+  function openGalleryAt(galleryName, idx){
+    currentGallery = Array.from(document.querySelectorAll('img[data-gallery="'+galleryName+'"]'));
+    if (currentGallery.length === 0) return;
+    currentIndex = (idx + currentGallery.length) % currentGallery.length;
+    const el = currentGallery[currentIndex];
+    modalImg.src = el.src;
+    modalImg.alt = el.alt || '';
+    overlay.classList.add('open');
+    overlay.setAttribute('aria-hidden','false');
+    document.body.classList.add('modal-open');
+    closeBtn.focus();
+  }
+
+  function closeGallery(){
+    overlay.classList.remove('open');
+    overlay.setAttribute('aria-hidden','true');
+    modalImg.src = '';
+    currentGallery = [];
+    currentIndex = 0;
+    document.body.classList.remove('modal-open');
+  }
+
+  function showNext(){ openGalleryAt(currentGallery[0]?.dataset?.gallery || 'hero', currentIndex+1) }
+  function showPrev(){ openGalleryAt(currentGallery[0]?.dataset?.gallery || 'hero', currentIndex-1) }
+
+  // attacher aux images existantes et aux images ajoutées dynamiquement
+  function attachListeners(context=document){
+    context.querySelectorAll('img[data-gallery]').forEach(el=>{
+      if (el._lightboxAttached) return;
+      el._lightboxAttached = true;
+      el.addEventListener('click', ()=>{
+        const gallery = el.dataset.gallery || 'hero';
+        const arr = Array.from(document.querySelectorAll('img[data-gallery="'+gallery+'"]'));
+        const idx = arr.indexOf(el);
+        openGalleryAt(gallery, idx);
+      });
+    });
+  }
+  attachListeners();
+
+  // observer DOM pour nouvelles images (ex. chargées dynamiquement)
+  const obs = new MutationObserver(muts=>{
+    muts.forEach(m=>{
+      m.addedNodes.forEach(n=>{
+        if (n.nodeType !== 1) return;
+        if (n.matches && n.matches('img[data-gallery]')) attachListeners(n.parentNode);
+        else attachListeners(n);
+      });
+    });
+  });
+  obs.observe(document.body, {childList:true, subtree:true});
+
+  // interactions
+  closeBtn.addEventListener('click', closeGallery);
+  overlay.addEventListener('click', (e)=> { if (e.target === overlay) closeGallery(); });
+  overlay.querySelector('.modal-content').addEventListener('click', e => e.stopPropagation());
+  nextBtn.addEventListener('click', (e)=>{ e.stopPropagation(); showNext(); });
+  prevBtn.addEventListener('click', (e)=>{ e.stopPropagation(); showPrev(); });
+  document.addEventListener('keydown', (e)=>{
+    if (!overlay.classList.contains('open')) return;
+    if (e.key === 'Escape') closeGallery();
+    if (e.key === 'ArrowRight') showNext();
+    if (e.key === 'ArrowLeft') showPrev();
+  });
+})();
+
+</script>
+
+<script>
+/* Rotation aléatoire avec détection automatique des photos disponibles */
+document.addEventListener('DOMContentLoaded', async () => {
+  const containers = document.querySelectorAll('[data-dir]');
+  const imagePools = new Map();
+  const lastUsed = new Map();
+
+  // Définition des patterns de nommage et extensions pour chaque dossier
+  const patterns = {
+    'maisonjardin': { base: 'maison-jardin', extensions: ['.webp', '.jpeg', '.jpg', '.png'] },
+    'coursenfants': { base: 'petitschefs', extensions: ['.jpg', '.jpeg', '.png', '.webp'] },
+    'coursadultes': { base: 'cours', extensions: ['.jpg', '.jpeg', '.png', '.webp'] },
+    'dinnerspectacle': { base: 'dinerspectacle', extensions: ['.jpg', '.jpeg', '.png', '.webp'] },
+    'potager': { base: 'jardin', extensions: ['.jpg', '.jpeg', '.png', '.webp'] }
+  };
+
+  // Teste si une image existe en chargeant réellement le fichier
+  function imageExists(url) {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.onload = () => resolve(true);
+      img.onerror = () => resolve(false);
+      img.src = url;
+    });
+  }
+
+  // Scan asynchrone d'un dossier pour trouver toutes les images disponibles
+  async function scanDirectory(dir) {
+    const config = patterns[dir];
+    if (!config) return [];
+
+    const pool = [];
+    const maxAttempts = 50; // teste jusqu'à 50 images
+    
+    console.log(`🔍 Scan du dossier "${dir}"...`);
+    
+    for (let i = 1; i <= maxAttempts; i++) {
+      // Teste chaque extension pour ce numéro
+      let found = false;
+      for (const ext of config.extensions) {
+        const path = `${dir}/${config.base}${i}${ext}`;
+        const exists = await imageExists(path);
+        
+        if (exists) {
+          pool.push(path);
+          found = true;
+          console.log(`  ✓ Trouvée: ${path}`);
+          break; // Passe au numéro suivant dès qu'une extension correspond
+        }
+      }
+      
+      // Si aucune extension ne correspond pour ce numéro, arrête le scan
+      if (!found && i > 3) {
+        // On autorise quelques "trous" dans la numérotation
+        break;
+      }
+    }
+    
+    console.log(`✅ ${pool.length} image(s) trouvée(s) dans "${dir}"`);
+    return pool;
+  }
+
+  // Sélectionne aléatoirement des images du pool
+  function pickRandomImages(dir, count) {
+    let pool = imagePools.get(dir);
+    if (!pool || pool.length === 0) return [];
+
+    // Éviter les images récemment utilisées
+    const used = lastUsed.get(dir) || [];
+    const available = pool.filter(img => !used.includes(img));
+    
+    const selected = [];
+    const tmpPool = available.length >= count ? available : pool.slice();
+
+    while (selected.length < count && tmpPool.length > 0) {
+      const idx = Math.floor(Math.random() * tmpPool.length);
+      selected.push(tmpPool.splice(idx, 1)[0]);
+    }
+
+    // Mémoriser cette sélection
+    lastUsed.set(dir, selected);
+    
+    return selected;
+  }
+
+  // Met à jour les images affichées
+  function updateImages() {
+    containers.forEach(container => {
+      const dir = container.dataset.dir;
+      if (!dir) return;
+
+      const images = pickRandomImages(dir, 3);
+      const imgElements = container.querySelectorAll('img');
+
+      images.forEach((src, i) => {
+        if (imgElements[i]) {
+          imgElements[i].src = src;
+        }
+      });
+    });
+  }
+
+  // Initialisation : scan de tous les dossiers
+  const dirs = new Set();
+  containers.forEach(c => {
+    if (c.dataset.dir) dirs.add(c.dataset.dir);
+  });
+
+  console.log('🚀 Initialisation du système de rotation d\'images...');
+  
+  for (const dir of dirs) {
+    const pool = await scanDirectory(dir);
+    imagePools.set(dir, pool);
+  }
+
+  console.log('✨ Scan terminé, démarrage de la rotation...');
+
+  // Première mise à jour et rotation périodique
+  updateImages();
+  setInterval(updateImages, 3000);
+});
+</script>
+</body>
+</html>
