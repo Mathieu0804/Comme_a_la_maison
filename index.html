@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Comme à la Maison — Cours & Dîner Spectacle</title>
+  <title>5eme GOUT — Cours & Dîner Spectacle</title>
   <meta name="description" content="Cours de cuisine enfants & adultes, dîner spectacle, produits du potager qui entourent la maison." />
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Cormorant+Garamond:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
@@ -17,7 +17,6 @@
     *{box-sizing:border-box;margin:0;padding:0}
     body{font-family:"Cormorant Garamond", Georgia, serif;background:var(--creme);color:var(--texte);line-height:1.6}
     header{
-      /* bannière image en pleine largeur */
       background-image: url('entete.png');
       background-size: cover;
       background-position: center;
@@ -27,7 +26,6 @@
       position:relative;
       overflow:hidden;
     }
-    /* légère superposition pour garantir la lisibilité du texte */
     header::before{
       content: "";
       position: absolute;
@@ -37,7 +35,6 @@
     }
     header * { position: relative; z-index: 1; }
     header h1{font-family:'Dancing Script',cursive;font-size:3.2rem;margin-bottom:6px}
-    /* Paragraphe de la bannière : plus grand et placé en bas à droite */
     header p{
       font-size:1.15rem;
       opacity:0.95;
@@ -49,7 +46,6 @@
       line-height:1.35;
       margin: 0;
     }
-    /* Petite adaptation pour écrans étroits : texte centré sous le titre */
     @media (max-width:900px){
       header p{
         position: static;
@@ -66,22 +62,18 @@
     .hero{display:grid;grid-template-columns:1fr 420px;gap:22px;align-items:center;margin-bottom:28px}
     .hero .card{padding:22px;border-radius:12px;background:#fff;box-shadow:0 6px 20px rgba(60,50,30,0.06);}
     .hero img{width:100%;height:320px;object-fit:cover;border-radius:10px;display:block}
-    /* Puzzle images : trois vignettes superposées, contemporaine */
     .hero-images{position:relative;width:100%;height:320px;display:block}
     .hero-images img{position:absolute;object-fit:cover;border-radius:12px;box-shadow:0 8px 30px rgba(20,15,10,0.18);transition:transform .25s ease;cursor:default}
     .hero-images img:nth-child(1){left:0;top:0;width:62%;height:70%;transform:rotate(-4deg)}
     .hero-images img:nth-child(2){right:0;top:6%;width:56%;height:64%;transform:rotate(6deg)}
     .hero-images img:nth-child(3){left:18%;bottom:0;width:64%;height:66%;transform:rotate(-2deg)}
     .hero-images img:hover{transform:scale(1.03)}
-    /* Puzzle réutilisable (même présentation que maisonjardin) */
     .puzzle-images{position:relative;width:100%;height:320px;display:block}
     .puzzle-images img{position:absolute;object-fit:cover;border-radius:12px;box-shadow:0 8px 30px rgba(20,15,10,0.18);transition:transform .25s ease;cursor:pointer}
     .puzzle-images img:nth-child(1){left:0;top:0;width:62%;height:70%;transform:rotate(-4deg)}
     .puzzle-images img:nth-child(2){right:0;top:6%;width:56%;height:64%;transform:rotate(6deg)}
     .puzzle-images img:nth-child(3){left:18%;bottom:0;width:64%;height:66%;transform:rotate(-2deg)}
     .puzzle-images img:hover{transform:scale(1.03)}
-    /* Puzzle pour section adultes : 5 images superposées */
-    /* Lightbox / modal */
     .modal-overlay{
       position:fixed;
       inset:0;
@@ -95,10 +87,7 @@
       opacity:0;
     }
     .modal-overlay.open{display:flex;opacity:1}
-
-    /* Bloquer le scroll de fond quand la modal est ouverte */
     body.modal-open{overflow:hidden;}
-
     .modal-content{
       max-width:1100px;
       width:100%;
@@ -144,13 +133,46 @@
     ul{margin-top:10px;margin-left:18px}
     .cta{display:inline-block;background:var(--terre);color:white;padding:10px 16px;border-radius:8px;text-decoration:none;font-weight:700;margin-top:12px}
     footer{background:var(--vert-sauge);color:white;padding:22px;text-align:center;margin-top:24px}
-    @media (max-width:900px){.hero{grid-template-columns:1fr}.grid2{grid-template-columns:1fr} .hero img{height:220px} }
+    
+    /* Styles pour le formulaire */
+    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:16px}
+    .form-group{display:flex;flex-direction:column}
+    .form-group label{margin-bottom:6px;font-weight:600;color:var(--bois)}
+    .form-group input,.form-group select,.form-group textarea{
+      width:100%;
+      padding:10px;
+      border:2px solid #e9e6e0;
+      border-radius:6px;
+      font-family:inherit;
+      font-size:1rem;
+      transition:border-color .2s ease;
+    }
+    .form-group input:focus,.form-group select:focus,.form-group textarea:focus{
+      outline:none;
+      border-color:var(--terre);
+    }
+    .form-success{
+      background:#d4edda;
+      border:1px solid #c3e6cb;
+      color:#155724;
+      padding:12px;
+      border-radius:6px;
+      margin-top:16px;
+      display:none;
+    }
+    .form-success.show{display:block}
+    @media (max-width:900px){
+      .hero{grid-template-columns:1fr}
+      .grid2{grid-template-columns:1fr}
+      .hero img{height:220px}
+      .form-row{grid-template-columns:1fr}
+    }
   </style>
 </head>
 <body>
   <header>
-    <h1>Comme à la Maison</h1>
-    <p>Cours pour enfants, ateliers adultes & dîners-spectacle — une maison, un potager, des plats préparés devant vous.</p>
+    <h1>5éme GOUT</h1>
+    <p>Cours pour enfants, ateliers adultes & dîners-spectacle —<br>une maison, un potager, des plats préparés devant vous.</p>
   </header>
 
   <nav aria-label="Navigation principale">
@@ -180,7 +202,6 @@
       </div>
 
       <div>
-        <!-- Puzzle / collage de 3 images contemporaines -->
         <div class="hero-images" data-dir="maisonjardin" data-gallery="maisonjardin" aria-hidden="false">
           <img src="maisonjardin/maison-jardin3.webp" alt="Maison et jardin - vue 1" data-gallery="maisonjardin" />
           <img src="maisonjardin/maison-jardin1.jpeg" alt="Maison et jardin - vue 2" data-gallery="maisonjardin" />
@@ -204,7 +225,6 @@
           </ul>
         </div>
         <div>
-          <!-- Puzzle 3 images pour la section enfants -->
           <div class="puzzle-images" data-dir="coursenfants" data-gallery="coursenfants" aria-hidden="false">
             <img src="coursenfants/petitschefs3.jpg" alt="Cours enfants - vue 1" data-gallery="coursenfants" />
             <img src="coursenfants/petitschefs2.jpeg" alt="Cours enfants - vue 2" data-gallery="coursenfants" />
@@ -227,7 +247,6 @@
           </ul>
         </div>
         <div>
-          <!-- Puzzle 3 images pour la section adultes (même style que maisonjardin) -->
           <div class="puzzle-images" data-dir="coursadultes" data-gallery="coursadultes" aria-hidden="false">
             <img src="coursadultes/cours1.jpg" alt="Atelier adultes - vue 1" data-gallery="coursadultes" />
             <img src="coursadultes/cours2.jpg" alt="Atelier adultes - vue 2" data-gallery="coursadultes" />
@@ -266,7 +285,6 @@
           <p>Contactez-nous pour composer ensemble votre événement sur mesure.</p>
         </div>
         <div>
-          <!-- Puzzle 3 images pour la section dîner -->
           <div class="puzzle-images" data-dir="dinnerspectacle" data-gallery="diner" aria-hidden="false">
             <img src="dinnerspectacle/dinerspectacle1.jpg" alt="Dîner spectacle - vue 1" data-gallery="diner" />
             <img src="dinnerspectacle/dinerspectacle2.jpg" alt="Dîner spectacle - vue 2" data-gallery="diner" />
@@ -298,20 +316,72 @@
 
     <section id="contact" class="card">
       <h2>Contact & Réservation</h2>
-      <p>Envoyez vos demandes (date, nombre de personnes, type d'activité) et nous revenons vers vous rapidement.</p>
-      <form onsubmit="event.preventDefault(); alert('Merci — demande reçue. Nous vous répondrons rapidement.');">
-        <label>Nom</label><br>
-        <input type="text" name="name" required style="width:100%;padding:8px;margin-top:6px;margin-bottom:10px"><br>
-        <label>Email</label><br>
-        <input type="email" name="email" required style="width:100%;padding:8px;margin-top:6px;margin-bottom:10px"><br>
-        <label>Message / Préférences</label><br>
-        <textarea name="message" rows="4" style="width:100%;padding:8px;margin-top:6px"></textarea><br><br>
-        <button class="cta" type="submit">Envoyer la demande</button>
+      <p>Remplissez le formulaire ci-dessous pour réserver votre activité. Nous vous répondrons dans les plus brefs délais.</p>
+      
+      <form id="reservationForm" action="https://formspree.io/f/VOTRE_CODE_ICI" method="POST">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="nom">Nom *</label>
+            <input type="text" id="nom" name="nom" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="telephone">Téléphone</label>
+            <input type="tel" id="telephone" name="telephone" placeholder="+33 6 12 34 56 78">
+          </div>
+          
+          <div class="form-group">
+            <label for="activite">Type d'activité *</label>
+            <select id="activite" name="activite" required>
+              <option value="">-- Sélectionnez --</option>
+              <option value="cours-enfants">Cours Enfants</option>
+              <option value="atelier-adultes">Atelier Adultes</option>
+              <option value="diner-spectacle">Dîner Spectacle</option>
+              <option value="privatisation">Privatisation / Événement</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="date">Date souhaitée *</label>
+            <input type="date" id="date" name="date" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="personnes">Nombre de personnes *</label>
+            <input type="number" id="personnes" name="personnes" min="1" max="50" required>
+          </div>
+        </div>
+
+        <div class="form-group" style="margin-bottom:16px">
+          <label for="message">Message / Demandes particulières</label>
+          <textarea id="message" name="message" rows="5" placeholder="Précisez vos préférences, allergies alimentaires, ou toute autre information utile..."></textarea>
+        </div>
+
+        <button class="cta" type="submit">Envoyer la demande de réservation</button>
       </form>
-      <p style="margin-top:10px;color:#666">Pour rendre le formulaire opérationnel : utilisez Formspree, Netlify Forms ou connectez un backend.</p>
+
+      <div id="formSuccess" class="form-success">
+        ✓ Merci ! Votre demande a bien été envoyée. Nous vous répondrons rapidement.
+      </div>
+
+      <p style="margin-top:16px;color:#666;font-size:0.9rem">
+        <strong>📧 Instructions de configuration :</strong><br>
+        1. Créez un compte gratuit sur <a href="https://formspree.io" target="_blank" style="color:var(--terre)">formspree.io</a><br>
+        2. Créez un nouveau formulaire et notez votre code (ex: xpzgabcd)<br>
+        3. Remplacez "VOTRE_CODE_ICI" dans le code HTML par votre code Formspree<br>
+        4. Les réservations arriveront directement sur votre Gmail !
+      </p>
     </section>
     
-    <!-- Lightbox modal -->
     <div id="lightbox" class="modal-overlay" aria-hidden="true" role="dialog" aria-label="Agrandissement image">
       <div class="modal-content">
         <button class="modal-close" aria-label="Fermer">✕</button>
@@ -327,7 +397,7 @@
   </footer>
 
 <script>
-// Lightbox centré, conserve la présentation puzzle ; gère blocage du scroll et focus accessible
+// Lightbox
 (function(){
   const overlay = document.getElementById('lightbox');
   const modalImg = overlay.querySelector('.modal-img');
@@ -362,7 +432,6 @@
   function showNext(){ openGalleryAt(currentGallery[0]?.dataset?.gallery || 'hero', currentIndex+1) }
   function showPrev(){ openGalleryAt(currentGallery[0]?.dataset?.gallery || 'hero', currentIndex-1) }
 
-  // attacher aux images existantes et aux images ajoutées dynamiquement
   function attachListeners(context=document){
     context.querySelectorAll('img[data-gallery]').forEach(el=>{
       if (el._lightboxAttached) return;
@@ -377,7 +446,6 @@
   }
   attachListeners();
 
-  // observer DOM pour nouvelles images (ex. chargées dynamiquement)
   const obs = new MutationObserver(muts=>{
     muts.forEach(m=>{
       m.addedNodes.forEach(n=>{
@@ -389,7 +457,6 @@
   });
   obs.observe(document.body, {childList:true, subtree:true});
 
-  // interactions
   closeBtn.addEventListener('click', closeGallery);
   overlay.addEventListener('click', (e)=> { if (e.target === overlay) closeGallery(); });
   overlay.querySelector('.modal-content').addEventListener('click', e => e.stopPropagation());
@@ -403,16 +470,25 @@
   });
 })();
 
-</script>
+// Gestion du formulaire
+document.getElementById('reservationForm').addEventListener('submit', function(e) {
+  // Afficher le message de succès après soumission
+  setTimeout(function() {
+    const successMsg = document.getElementById('formSuccess');
+    if (successMsg) {
+      successMsg.classList.add('show');
+      // Masquer après 5 secondes
+      setTimeout(() => successMsg.classList.remove('show'), 5000);
+    }
+  }, 500);
+});
 
-<script>
-/* Rotation aléatoire avec détection automatique des photos disponibles */
+// Rotation d'images
 document.addEventListener('DOMContentLoaded', async () => {
   const containers = document.querySelectorAll('[data-dir]');
   const imagePools = new Map();
   const lastUsed = new Map();
 
-  // Définition des patterns de nommage et extensions pour chaque dossier
   const patterns = {
     'maisonjardin': { base: 'maison-jardin', extensions: ['.webp', '.jpeg', '.jpg', '.png'] },
     'coursenfants': { base: 'petitschefs', extensions: ['.jpg', '.jpeg', '.png', '.webp'] },
@@ -421,7 +497,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     'potager': { base: 'jardin', extensions: ['.jpg', '.jpeg', '.png', '.webp'] }
   };
 
-  // Teste si une image existe en chargeant réellement le fichier
   function imageExists(url) {
     return new Promise((resolve) => {
       const img = new Image();
@@ -431,18 +506,14 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Scan asynchrone d'un dossier pour trouver toutes les images disponibles
   async function scanDirectory(dir) {
     const config = patterns[dir];
     if (!config) return [];
 
     const pool = [];
-    const maxAttempts = 50; // teste jusqu'à 50 images
-    
-    console.log(`🔍 Scan du dossier "${dir}"...`);
+    const maxAttempts = 50;
     
     for (let i = 1; i <= maxAttempts; i++) {
-      // Teste chaque extension pour ce numéro
       let found = false;
       for (const ext of config.extensions) {
         const path = `${dir}/${config.base}${i}${ext}`;
@@ -451,28 +522,20 @@ document.addEventListener('DOMContentLoaded', async () => {
         if (exists) {
           pool.push(path);
           found = true;
-          console.log(`  ✓ Trouvée: ${path}`);
-          break; // Passe au numéro suivant dès qu'une extension correspond
+          break;
         }
       }
       
-      // Si aucune extension ne correspond pour ce numéro, arrête le scan
-      if (!found && i > 3) {
-        // On autorise quelques "trous" dans la numérotation
-        break;
-      }
+      if (!found && i > 3) break;
     }
     
-    console.log(`✅ ${pool.length} image(s) trouvée(s) dans "${dir}"`);
     return pool;
   }
 
-  // Sélectionne aléatoirement des images du pool
   function pickRandomImages(dir, count) {
     let pool = imagePools.get(dir);
     if (!pool || pool.length === 0) return [];
 
-    // Éviter les images récemment utilisées
     const used = lastUsed.get(dir) || [];
     const available = pool.filter(img => !used.includes(img));
     
@@ -484,13 +547,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       selected.push(tmpPool.splice(idx, 1)[0]);
     }
 
-    // Mémoriser cette sélection
     lastUsed.set(dir, selected);
-    
     return selected;
   }
 
-  // Met à jour les images affichées
   function updateImages() {
     containers.forEach(container => {
       const dir = container.dataset.dir;
@@ -507,25 +567,18 @@ document.addEventListener('DOMContentLoaded', async () => {
     });
   }
 
-  // Initialisation : scan de tous les dossiers
   const dirs = new Set();
   containers.forEach(c => {
     if (c.dataset.dir) dirs.add(c.dataset.dir);
   });
 
-  console.log('🚀 Initialisation du système de rotation d\'images...');
-  
   for (const dir of dirs) {
     const pool = await scanDirectory(dir);
     imagePools.set(dir, pool);
   }
 
-  console.log('✨ Scan terminé, démarrage de la rotation...');
-
-  // Première mise à jour et rotation périodique
   updateImages();
   setInterval(updateImages, 3000);
 });
 </script>
 </body>
-</html>
